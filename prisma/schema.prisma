@@ -22,34 +22,32 @@ model User {
 }
 
 model OutreachContact {
-  id               Int          @id @default(autoincrement())
-  createdAt        DateTime     @default(now())
-  updatedAt        DateTime     @updatedAt
-  name             String       @db.VarChar(255) @unique
+  id               Int       @id @default(autoincrement())
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  name             String    @unique @db.VarChar(255)
   outreachLocation String
-  phoneNumber      String       @db.VarChar(20) @unique // Adjust the length as needed
+  phoneNumber      String    @unique @db.VarChar(20) // Adjust the length as needed
   outreachDateTime DateTime?
-  contacted        Boolean      @default(false)
+  contacted        Boolean   @default(false)
   groupName        String
-  FirstTimers      FirstTimer[]
 }
 
 model FirstTimer {
-  id                 Int              @id @default(autoincrement())
-  name               String
-  address            String?
-  phoneNumber        String           @db.VarChar(20) // Adjust the length as needed
-  occupation         String?
-  isStudent          Boolean
-  outreachContact    OutreachContact? @relation(fields: [outreachContactsId], references: [id])
-  Student            Student?
-  outreachContactsId Int?             @unique
+  id          Int     @id @default(autoincrement())
+  name        String
+  address     String?
+  phoneNumber String  @unique @db.VarChar(20) // Adjust the length as needed
+  occupation  String?
+  isStudent   Boolean @default(false)
 }
 
 model Student {
-  id            Int        @id @default(autoincrement())
-  firstTimer    FirstTimer @relation(fields: [firstTimersId], references: [id])
-  department    String
-  level         Int
-  firstTimersId Int        @unique
+  id          Int    @id @default(autoincrement())
+  name        String
+  department  String
+  level       Int
+  address     String?
+  phoneNumber String @unique @db.VarChar(20) // Adjust the length as needed
+  yearOfGrad  Int
 }

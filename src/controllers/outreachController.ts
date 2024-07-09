@@ -48,6 +48,27 @@ export async function createContact(req: Request, res: Response) {
   }
 }
 
+// export async function createManyContact(req: Request, res: Response) {
+//   try {
+//     const contactArray = req.body
+      
+//       req.body;
+//     const contact = await prisma.outreachContact.createMany({
+//       data: contactArray
+//     });
+//     return res.status(201).json({
+//       status: 'success',
+//       contact,
+//     });
+//   } catch (error) {
+//     return res.status(400).json({
+//       status: 'fail',
+//       message: `${error}`,
+//     });
+//   } finally {
+//     await prisma.$disconnect();
+//   }
+// }
 
 export async function deleteAll(req: Request, res: Response) {
   try {
