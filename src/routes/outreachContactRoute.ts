@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createContact, createManyContact, deleteAll, getAllContacts } from '../controllers/outreachController';
+import { createContact, deleteAll, getAllContacts, getByID } from '../controllers/outreachController';
 
 const outreachRouter = Router();
 
@@ -9,5 +9,6 @@ outreachRouter
   .post(createContact)
   .delete(deleteAll);
 // outreachRouter.route('/create-many').post(createManyContact)
+outreachRouter.route('/:id').get(getByID).delete().patch()
 
 export default outreachRouter;
