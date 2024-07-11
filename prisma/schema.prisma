@@ -28,7 +28,7 @@ model OutreachContact {
   name             String    @unique @db.VarChar(255)
   outreachLocation String
   phoneNumber      String    @unique @db.VarChar(20) // Adjust the length as needed
-  outreachDateTime DateTime?
+  outreachDateTime DateTime
   contacted        Boolean   @default(false)
   groupName        String
 }

@@ -7,46 +7,59 @@ import {
   parseString,
   parseUserDateInput,
 } from '../utils/userInputParser';
+import { contactSchema } from '../utils/zodSchema';
 
-export const getAllContacts = async (req: Request, res: Response) => {
-  const queryObj = { ...req.query };
-  const { name, contacted, groupName } = queryObj;
+export const getAllContacts = asyncHandler(
+  async (req: Request, res: Response) => {
+    const queryObj = { ...req.query };
+    const { name, contacted, groupName, sort } = queryObj;
+    let orderBy = {};
 
-  // Type assertion and narrowing for name
-  let nameString: string | undefined;
-  nameString = parseString(name);
+    if (sort === 'latest') {
+      orderBy = {
+        outreachDateTime: 'desc',
+      };
+    } else if (sort === 'oldest') {
+      orderBy = {
+        outreachDateTime: 'asc',
+      };
+    }
+    // Type assertion and narrowing for name
+    let nameString: string | undefined;
+    nameString = parseString(name);
 
-  // Type assertion and narrowing for groupName
-  let groupNameString: string | undefined;
-  groupNameString = parseString(groupName);
+    // Type assertion and narrowing for groupName
+    let groupNameString: string | undefined;
+    groupNameString = parseString(groupName);
 
-  // Convert contacted to boolean
-  let contactedBoolean: boolean | undefined;
-  contactedBoolean = parseBoolean(contacted);
+    // Convert contacted to boolean
+    let contactedBoolean: boolean | undefined;
+    contactedBoolean = parseBoolean(contacted);
 
-  const contacts = await prisma.outreachContact.findMany({
-    where: {
-      name: {
-        contains: nameString,
-        mode: 'insensitive',
+    const contacts = await prisma.outreachContact.findMany({
+      orderBy,
+      where: {
+        name: {
+          contains: nameString,
+          mode: 'insensitive',
+        },
+        groupName: {
+          contains: groupNameString,
+          mode: 'insensitive',
+        },
+        contacted: contactedBoolean,
       },
-      groupName: {
-        contains: groupNameString,
-        mode: 'insensitive',
+    });
+
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        length: contacts.length,
+        contacts,
       },
-      contacted: contactedBoolean,
-    },
-  });
-
-  return res.status(200).json({
-    status: 'success',
-    data: {
-      length: contacts.length,
-      contacts,
-    },
-  });
-};
-
+    });
+  }
+);
 export const getByID = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const id = Number(req.params.id);
@@ -66,12 +79,44 @@ export const getByID = asyncHandler(
   }
 );
 
+export const updateContact = asyncHandler(async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const id = Number(req.params.id);
+  const updates = { ...req.body }
+  const { outreachLocation, phoneNumber, outreachDateTime, groupName, contacted } =
+    updates;
+  const contact = await prisma.outreachContact.update({
+    where: {
+      id,
+    },
+    data: {
+      contacted,
+      groupName,
+      phoneNumber,
+      outreachDateTime,
+      outreachLocation,
+    },
+  });
+   return res.status(200).json({
+     status: 'success',
+     contact,
+   });
+});
+
 export const createContact = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.body);
+    const validatedData = contactSchema.parse(req.body);
+    console.log(validatedData);
     const { name, outreachLocation, phoneNumber, outreachDateTime, groupName } =
-      req.body;
+      validatedData;
+
     let parsedDateInput;
     parsedDateInput = parseUserDateInput(outreachDateTime);
+
     const contact = await prisma.outreachContact.create({
       data: {
         name,
