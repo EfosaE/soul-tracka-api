@@ -14,22 +14,28 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(uuid())
-  username String  @unique
+  id       String @id @default(uuid())
+  username String @unique
   password String
-  email    String? @unique
-  role     String  @default("user") // Default role is "user"; adjust as needed
+  email    String @unique
+  role     Role   @default(USER)
+}
+
+enum Role {
+  USER
+  SUPERUSER
+  ADMIN
 }
 
 model OutreachContact {
-  id               Int       @id @default(autoincrement())
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
-  name             String    @unique @db.VarChar(255)
+  id               Int      @id @default(autoincrement())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  name             String   @unique @db.VarChar(255)
   outreachLocation String
-  phoneNumber      String    @unique @db.VarChar(20) // Adjust the length as needed
+  phoneNumber      String   @unique @db.VarChar(20) // Adjust the length as needed
   outreachDateTime DateTime
-  contacted        Boolean   @default(false)
+  contacted        Boolean  @default(false)
   groupName        String
 }
 
@@ -43,11 +49,11 @@ model FirstTimer {
 }
 
 model Student {
-  id          Int    @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   name        String
   department  String
   level       Int
   address     String?
-  phoneNumber String @unique @db.VarChar(20) // Adjust the length as needed
+  phoneNumber String  @unique @db.VarChar(20) // Adjust the length as needed
   yearOfGrad  Int
 }
