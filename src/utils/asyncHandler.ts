@@ -1,5 +1,3 @@
-import { error } from 'console';
-import prisma from './prismaClient';
 import { NextFunction, Request, Response } from 'express';
 
 export function asyncHandler(
@@ -9,4 +7,3 @@ export function asyncHandler(
     fn(req, res, next).catch(next);
   };
 }
-

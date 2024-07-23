@@ -12,7 +12,7 @@ export const hashPassword = (password:string): Promise<string> => {
 };
 
 // Function to verify a password using scrypt
-export const verifyPassword = (hash:string, password:string) => {
+export const comparePassword = (hash:string, password:string) => {
   return new Promise((resolve, reject) => {
     const [salt, key] = hash.split(':'); // Extract salt and key from the stored hash
     crypto.scrypt(password, salt, 64, (err, derivedKey) => {
