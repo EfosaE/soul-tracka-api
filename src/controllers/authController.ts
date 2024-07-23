@@ -62,3 +62,13 @@ export const login = asyncHandler(
     });
   }
 );
+
+
+export const logOut = async (req:Request, res:Response) => {
+    res.cookie('jwt', '', {
+      maxAge: 1,
+      httpOnly: true,
+      // expires: new Date(Date.now() + 1),
+    });
+    res.status(200).json({ status: 'success' });
+}

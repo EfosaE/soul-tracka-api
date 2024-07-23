@@ -19,3 +19,22 @@ export const getAllUsers = asyncHandler(
     });
   }
 );
+
+export const getUserProfile = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { id } = req.payload;
+    const user = await prisma.user.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        role: true,
+      },
+    });
+    return res.status(200).json({
+      status: 'success',
+      user
+    });
+  }
+);
