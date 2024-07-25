@@ -6,7 +6,8 @@
     "start": "concurrently \"npm run watch-ts\" \"nodemon dist/server.js\"",
     "watch-ts": "tsc -w",
     "migrate": "npx prisma migrate dev --name update",
-    "build": "tsc"
+    "build": "tsc",
+    "start:prod": "node dist/server.js"
   },
   "keywords": [],
   "author": "",
