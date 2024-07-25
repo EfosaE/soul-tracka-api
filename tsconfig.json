@@ -25,6 +25,6 @@
     "skipLibCheck": true // Skip type checking of all declaration files (*.d.ts)
   },
   "include": [
-    "src/**/*" // Include all TypeScript files under src directory
+    "src/**/*.ts" // Include all TypeScript files under src directory
   ]
 }
