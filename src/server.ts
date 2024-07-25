@@ -3,7 +3,7 @@ import prisma from "./utils/prismaClient";
 
 
 // Set the port number for the server
-const port = 3000;
+const port = 4000;
 
 // Define a route for the root path ('/')
 app.get('/', (req, res) => {
