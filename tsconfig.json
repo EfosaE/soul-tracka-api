@@ -1,17 +1,35 @@
 {
   "compilerOptions": {
-    "target": "es2020",
-    "module": "commonjs", // Emit CommonJS modules
-    "moduleResolution": "node", // Use Node.js resolution for module import/export
+    "target": "es2016",
+    "module": "commonjs",
     "rootDir": "./src",
     "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "esModuleInterop": true, // Enable interoperability between CommonJS and ES Modules
-    "skipLibCheck": true // Skip type checking of all declaration files (*.d.ts)
+    "skipLibCheck": true,
+    "typeRoots": ["./node_modules/@types", "./types"]
   },
-  "include": ["src/**/*.ts", "types/**/*.d.ts"],
-  "typeRoots": ["./types", "./node_modules/@types"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
+
+
+
+// {
+//   "compilerOptions": {
+//     "target": "es2020",
+//     "module": "commonjs", // Emit CommonJS modules
+//     "moduleResolution": "node", // Use Node.js resolution for module import/export
+//     "rootDir": "./src",
+//     "outDir": "./dist",
+//     "strict": true,
+//     "esModuleInterop": true, // Enable interoperability between CommonJS and ES Modules
+//     "skipLibCheck": true // Skip type checking of all declaration files (*.d.ts)
+//   },
+//   "include": ["src/**/*.ts", "types/**/*.d.ts"],
+//   "typeRoots": ["./types", "./node_modules/@types"]
+// }
 
 
 
