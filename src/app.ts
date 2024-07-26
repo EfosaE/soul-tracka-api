@@ -16,7 +16,7 @@ app.use(cookieParser());
 // Define a route for the root path ('/')
 app.get('/', (req, res) => {
   // Send a response to the client
-  res.send('Hello, TypeScript + Node.js + Express!');
+  res.send('working soul api');
 });
 
 app.use('/api/v1/outreach-contacts', outreachRouter);
