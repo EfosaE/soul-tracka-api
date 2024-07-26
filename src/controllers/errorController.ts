@@ -28,11 +28,6 @@ const sendErrorDev = (err: any, req: Request, res: Response) => {
       message: err.message,
       stack: err.stack,
     });
-  } else {
-    //rendered website
-    res
-      .status(err.statusCode)
-      .render('error', { title: 'Something went wrong!', msg: err.message });
   }
 };
 
